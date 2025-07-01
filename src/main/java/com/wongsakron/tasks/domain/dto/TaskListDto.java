@@ -12,3 +12,5 @@ public record TaskListDto(
         List<TaskDto> tasks
 ) {
 }
+
+// Data Transfer Object (DTO) for TaskList.

@@ -15,3 +15,5 @@ public record TaskDto(
         TaskStatus status
 ) {
 }
+// Data Transfer Object (DTO) for Task.
+

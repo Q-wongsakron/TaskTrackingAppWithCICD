@@ -9,3 +9,5 @@ public interface TaskListMapper {
 
     TaskListDto toDto(TaskList taskList);
 }
+
+// This interface defines methods for mapping between TaskListDto and TaskList entities.

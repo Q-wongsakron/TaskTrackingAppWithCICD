@@ -62,3 +62,4 @@ public class TaskListMapperImpl implements TaskListMapper {
         return (double) closedTaskCount / tasks.size(); // Calculate the progress as a percentage of closed tasks over total tasks
     }
 }
+// This implementation of the TaskListMapper interface provides methods to convert between TaskListDto and TaskList entities,

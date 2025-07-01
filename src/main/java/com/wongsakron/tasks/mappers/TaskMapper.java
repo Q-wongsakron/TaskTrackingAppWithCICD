@@ -8,3 +8,5 @@ public interface TaskMapper {
     Task fromDto(TaskDto taskDto);
     TaskDto toDto(Task task);
 }
+
+// This interface defines methods for mapping between TaskDto and Task entities.
