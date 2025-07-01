@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TaskListServiceImpl implements TaskListService {
@@ -41,5 +43,10 @@ public class TaskListServiceImpl implements TaskListService {
                 now,
                 now
         )); // Save the new task list with the current timestamp for created and updated fields
+    }
+
+    @Override
+    public Optional<TaskList> getTaskList(UUID id) {
+        return taskListRepository.findById(id); // Retrieves a task list by its ID, returning an Optional
     }
 }

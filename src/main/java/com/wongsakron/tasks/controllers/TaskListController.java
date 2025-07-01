@@ -6,7 +6,10 @@ import com.wongsakron.tasks.mappers.TaskListMapper;
 import com.wongsakron.tasks.services.TaskListService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/task-lists")
@@ -35,6 +38,11 @@ public class TaskListController {
                 taskListMapper.fromDto(taskListDto)
         ); // Convert TaskListDto to TaskList entity and create a new task list
         return taskListMapper.toDto(createdTaskList); // Convert the created TaskList entity back to TaskListDto for the response
+    }
+
+    @GetMapping(path = "/{task_list_id}")
+    public Optional<TaskListDto> getTaskList(@PathVariable("task_list_id") UUID taskListId){
+        return taskListService.getTaskList(taskListId).map(taskListMapper::toDto); // Retrieve a task list by its ID and convert it to TaskListDto
     }
 
     // dto is a Data Transfer Object, which is used to transfer data between layers of the application.
