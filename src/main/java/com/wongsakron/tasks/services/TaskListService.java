@@ -10,4 +10,5 @@ public interface TaskListService {
     List<TaskList> listTaskLists(); // Retrieves all task lists
     TaskList createTaskList(TaskList taskList);
     Optional<TaskList> getTaskList(UUID id);
+    TaskList updateTaskList(UUID id, TaskList taskList); // Updates an existing task list by its ID
 }

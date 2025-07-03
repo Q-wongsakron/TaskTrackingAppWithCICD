@@ -45,6 +45,20 @@ public class TaskListController {
         return taskListService.getTaskList(taskListId).map(taskListMapper::toDto); // Retrieve a task list by its ID and convert it to TaskListDto
     }
 
+
+    @PutMapping(path = "/{task_list_id}")
+    public TaskListDto updateTaskList(
+            @PathVariable("task_list_id") UUID taskListID,
+            @RequestBody TaskListDto taskListDto
+    ) {
+        TaskList updatedTaskList = taskListService.updateTaskList(
+                taskListID,
+                taskListMapper.fromDto(taskListDto) // Convert TaskListDto to TaskList entity for updating
+        );
+
+        return taskListMapper.toDto(updatedTaskList);
+    } // Update an existing task list by its ID
+
     // dto is a Data Transfer Object, which is used to transfer data between layers of the application.
     // between the controller and the service layer, we use DTOs to avoid exposing the internal entity structure directly.
 }
