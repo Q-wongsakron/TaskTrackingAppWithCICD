@@ -71,4 +71,15 @@ public class TaskListServiceImpl implements TaskListService {
         existingTaskList.setUpdated(LocalDateTime.now());
         return taskListRepository.save(existingTaskList); // Updates the existing task list with new values and saves it
     }
+
+    @Override
+    public void deleteTaskList(UUID id) {
+        Optional<TaskList> existingTaskList = taskListRepository.findById(id);
+        // JPA จัดการให้เองได้
+        if(existingTaskList.isEmpty()){
+            throw new IllegalArgumentException("Task list not found!"); // Ensures the task list exists before attempting to delete
+        } else {
+            taskListRepository.deleteById(id); // Deletes the task list by its ID
+        }
+    }
 }

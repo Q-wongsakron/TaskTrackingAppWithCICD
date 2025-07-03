@@ -59,6 +59,11 @@ public class TaskListController {
         return taskListMapper.toDto(updatedTaskList);
     } // Update an existing task list by its ID
 
+    @DeleteMapping(path = "/{task_list_id}")
+    public void deleteTaskList(@PathVariable("task_list_id") UUID taskListId) {
+        taskListService.deleteTaskList(taskListId);
+    }
+
     // dto is a Data Transfer Object, which is used to transfer data between layers of the application.
     // between the controller and the service layer, we use DTOs to avoid exposing the internal entity structure directly.
 }
