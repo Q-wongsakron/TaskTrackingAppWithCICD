@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -70,5 +71,34 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findByTaskListIdAndId(taskListId, taskId); // Retrieves a specific task by its ID within a task list
     }
 
+    @Override
+    public Task updateTask(UUID taskListId, UUID taskId, Task task) {
+        if(null == task.getId()) {
+            throw new IllegalArgumentException("Task ID cannot be null!"); // Ensures that the task has a valid ID for updating
+        }
+        if(!Objects.equals(taskId,task.getId())){
+            throw new IllegalArgumentException("Task ID does not match the provided ID!"); // Validates that the task ID matches the provided ID
+        }
 
+        if(null == task.getPriority()){
+            throw new IllegalArgumentException("Task priority cannot be null!"); // Validates that the task has a non-null priority
+        }
+
+        if(null == task.getStatus()){
+            throw new IllegalArgumentException("Task status cannot be null!"); // Validates that the task has a non-null status
+        }
+
+        Task existingTask = taskRepository.findByTaskListIdAndId(taskListId, taskId).orElseThrow(
+                () -> new IllegalArgumentException("Task not found!") // Validates that the task exists in the specified task list
+        );
+
+        existingTask.setTitle(task.getTitle());
+        existingTask.setDescription(task.getDescription());
+        existingTask.setDueDate(task.getDueDate());
+        existingTask.setPriority(task.getPriority());
+        existingTask.setStatus(task.getStatus());
+        existingTask.setUpdated(LocalDateTime.now()); // Updates the task's updated timestamp
+
+        return taskRepository.save(existingTask); // Saves the updated task to the repository
+    }
 }
