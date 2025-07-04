@@ -1,12 +1,10 @@
 package com.wongsakron.tasks.controllers;
 
 import com.wongsakron.tasks.domain.dto.TaskDto;
+import com.wongsakron.tasks.domain.entities.Task;
 import com.wongsakron.tasks.mappers.TaskMapper;
 import com.wongsakron.tasks.services.TaskService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,5 +27,14 @@ public class TasksController {
                 .stream() // Streams the list of Task entities
                 .map(taskMapper::toDto)  // Converts Task entities to TaskDto
                 .toList(); // Retrieves all tasks for a specific task list and converts them to DTOs
+    }
+
+    @PostMapping
+    public TaskDto createTask(@PathVariable("task_list_id") UUID taskListId, @RequestBody TaskDto taskDto) {
+        Task createdTask = taskService.createTask(
+                taskListId,
+                taskMapper.fromDto(taskDto)
+        );
+        return taskMapper.toDto(createdTask); // Converts the created Task entity back to TaskDto for the response
     }
 }
