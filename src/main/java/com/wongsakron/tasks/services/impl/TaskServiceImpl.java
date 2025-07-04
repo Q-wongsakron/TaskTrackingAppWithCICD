@@ -64,4 +64,11 @@ public class TaskServiceImpl implements TaskService {
                 ); // Creates a new task
         return taskRepository.save(taskForSave); // Saves the new task to the repository
     }
+
+    @Override
+    public Optional<Task> getTask(UUID taskListId, UUID taskId) {
+        return taskRepository.findByTaskListIdAndId(taskListId, taskId); // Retrieves a specific task by its ID within a task list
+    }
+
+
 }

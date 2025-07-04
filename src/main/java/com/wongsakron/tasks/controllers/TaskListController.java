@@ -42,7 +42,8 @@ public class TaskListController {
 
     @GetMapping(path = "/{task_list_id}")
     public Optional<TaskListDto> getTaskList(@PathVariable("task_list_id") UUID taskListId){
-        return taskListService.getTaskList(taskListId).map(taskListMapper::toDto); // Retrieve a task list by its ID and convert it to TaskListDto
+        return taskListService.getTaskList(taskListId)
+                .map(taskListMapper::toDto); // Retrieve a task list by its ID and convert it to TaskListDto
     }
 
 
