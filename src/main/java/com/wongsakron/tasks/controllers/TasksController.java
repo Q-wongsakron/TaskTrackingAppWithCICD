@@ -60,4 +60,12 @@ public class TasksController {
 
         return taskMapper.toDto(updatedTask); // Converts the updated Task entity back to TaskDto for the response
     }
+
+    @DeleteMapping(path = "/{task_id}")
+    public void deleteTask(
+            @PathVariable("task_list_id") UUID taskListId,
+            @PathVariable("task_id") UUID taskId
+    ){
+        taskService.deleteTask(taskListId,taskId);
+    }
 }

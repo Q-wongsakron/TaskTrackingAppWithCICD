@@ -11,4 +11,5 @@ public interface TaskService {
     Task createTask(UUID taskListId, Task task); // Creates a new task in a specific task list
     Optional<Task> getTask(UUID taskListId, UUID taskId); // Retrieves a specific task by its ID
     Task updateTask(UUID taskListId, UUID taskId, Task task); // Updates an existing task in a specific task list
+    void deleteTask(UUID taskListId, UUID taskId); // Deletes a specific task by its ID
 }

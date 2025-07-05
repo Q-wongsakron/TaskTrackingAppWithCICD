@@ -8,6 +8,7 @@ import com.wongsakron.tasks.domain.entities.TaskStatus;
 import com.wongsakron.tasks.repositories.TaskListRepository;
 import com.wongsakron.tasks.repositories.TaskRepository;
 import com.wongsakron.tasks.services.TaskService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -100,5 +101,11 @@ public class TaskServiceImpl implements TaskService {
         existingTask.setUpdated(LocalDateTime.now()); // Updates the task's updated timestamp
 
         return taskRepository.save(existingTask); // Saves the updated task to the repository
+    }
+
+    @Override
+    @Transactional
+    public void deleteTask(UUID taskListId, UUID taskId) {
+        taskRepository.deleteByTaskListIdAndId(taskListId, taskId);
     }
 }
