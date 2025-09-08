@@ -36,12 +36,24 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task createTask(UUID taskListId, Task task) {
 
-        if(null != task.getId()) {
-            throw new IllegalArgumentException("Task already has an Id!"); // Ensures that the task does not already have an ID, indicating it is a new task
+
+        if (task == null) {
+            throw new IllegalArgumentException("Task payload cannot be null!");
+        }
+        if (task.getId() != null) {
+            throw new IllegalArgumentException("Task already has an Id!");
         }
 
-        if(null == task.getTitle()) {
-            throw new IllegalArgumentException("Task title cannot be null!"); // Validates that the task has a non-null title
+        if (task.getTitle() == null) {
+            throw new IllegalArgumentException("Task title cannot be null!");
+        }
+        String title = task.getTitle().trim();
+        if (title.isEmpty()) {
+            throw new IllegalArgumentException("Task title cannot be blank!");
+        }
+
+        if (taskListId == null) {
+            throw new IllegalArgumentException("Invalid Task List ID provided!");
         }
 
         TaskPriority taskPriority = Optional.ofNullable(task.getPriority())
@@ -49,7 +61,8 @@ public class TaskServiceImpl implements TaskService {
 
         TaskStatus taskStatus = TaskStatus.OPEN;
 
-        TaskList taskList = taskListRepository.findById(taskListId).orElseThrow(() -> new IllegalArgumentException("Invalid Task List ID provided!")); // Validates that the task list exists
+        TaskList taskList = taskListRepository.findById(taskListId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Task List ID provided!")); // Validates that the task list exists
 
         LocalDateTime now = LocalDateTime.now();
 
@@ -58,8 +71,8 @@ public class TaskServiceImpl implements TaskService {
                         task.getTitle(),
                         task.getDescription(),
                         task.getDueDate(),
-                        task.getStatus(),
-                        task.getPriority(),
+                        taskStatus,
+                        taskPriority,
                         taskList,
                         now,
                         now

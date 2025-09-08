@@ -75,7 +75,7 @@ public class TaskListServiceImpl implements TaskListService {
     @Override
     public void deleteTaskList(UUID id) {
         Optional<TaskList> existingTaskList = taskListRepository.findById(id);
-        // JPA จัดการให้เองได้
+        // JPA จัดการให้เองได้ เเต่เขียนเองก็ดี
         if(existingTaskList.isEmpty()){
             throw new IllegalArgumentException("Task list not found!"); // Ensures the task list exists before attempting to delete
         } else {
