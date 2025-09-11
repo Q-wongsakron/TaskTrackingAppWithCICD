@@ -193,7 +193,7 @@ public class TaskListServiceImplTest {
         sample.setId(id);
         when(listRepo.findById(id)).thenReturn(Optional.empty());
 
-        var ex = assertThrows(IllegalArgumentException.class, () -> svc.updateTaskList(id, sample));
+        var ex = assertThrows(IllegalStateException.class, () -> svc.updateTaskList(id, sample));
         assertThat(ex.getMessage()).contains("not found");
 
         verify(listRepo).findById(id);

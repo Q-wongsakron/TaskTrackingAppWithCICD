@@ -122,7 +122,7 @@ public class TaskServiceImplTest {
         when(taskListRepo.findById(listId)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> svc.createTask(listId, sample))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("Invalid Task List ID provided!");
 
         verify(taskListRepo).findById(listId);
@@ -255,7 +255,7 @@ public class TaskServiceImplTest {
         body.setStatus(TaskStatus.CLOSED);
 
         when(taskRepo.findByTaskListIdAndId(listId, taskId)).thenReturn(Optional.empty());
-        var ex = assertThrows(IllegalArgumentException.class, () -> svc.updateTask(listId, taskId, body));
+        var ex = assertThrows(IllegalStateException.class, () -> svc.updateTask(listId, taskId, body));
         assertThat(ex.getMessage()).contains("Task not found");
 
         verify(taskRepo, never()).save(any());

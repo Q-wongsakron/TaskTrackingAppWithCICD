@@ -62,7 +62,7 @@ public class TaskServiceImpl implements TaskService {
         TaskStatus taskStatus = TaskStatus.OPEN;
 
         TaskList taskList = taskListRepository.findById(taskListId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid Task List ID provided!")); // Validates that the task list exists
+                .orElseThrow(() -> new IllegalStateException("Invalid Task List ID provided!")); // Validates that the task list exists
 
         LocalDateTime now = LocalDateTime.now();
 
@@ -102,8 +102,8 @@ public class TaskServiceImpl implements TaskService {
             throw new IllegalArgumentException("Task status cannot be null!"); // Validates that the task has a non-null status
         }
 
-        Task existingTask = taskRepository.findByTaskListIdAndId(taskListId, taskId).orElseThrow(
-                () -> new IllegalArgumentException("Task not found!") // Validates that the task exists in the specified task list
+        Task existingTask = taskRepository.findByTaskListIdAndId(taskListId, taskId)
+                .orElseThrow(() -> new IllegalStateException("Task not found!") // Validates that the task exists in the specified task list
         );
 
         existingTask.setTitle(task.getTitle());

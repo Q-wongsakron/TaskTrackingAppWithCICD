@@ -63,7 +63,7 @@ public class TaskListServiceImpl implements TaskListService {
         } // Validates that the ID of the task list being updated matches the provided taskListId
 
         TaskList existingTaskList = taskListRepository.findById(taskListId).orElseThrow(() ->
-                new IllegalArgumentException("Task list not found!"));
+                new IllegalStateException("Task list not found!"));
         // Ensures the task list exists before updating
 
         existingTaskList.setTitle(taskList.getTitle());
